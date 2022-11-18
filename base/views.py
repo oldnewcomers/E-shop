@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from base.models import Product
 
 routes = [
     '/api/v1/products/',
