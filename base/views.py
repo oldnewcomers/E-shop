@@ -2,6 +2,10 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from base.models import Product
+from base.serializers import ProductSerializer
+from rest_framework.generics import ListAPIView
+from rest_framework.views import APIView
+
 
 routes = [
     '/api/v1/products/',
@@ -22,3 +26,15 @@ routes = [
 @api_view(http_method_names=["GET"])
 def GetRoutes(request):
     return Response(routes)
+
+
+class GetProducts(ListAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+
+class GetProduct(APIView):
+    def get(self , request , pk):
+        query = Product.objects.get(pk = pk)
+        serializer = ProductSerializer(query)
+        return Response(serializer.data)
